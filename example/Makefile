@@ -1,9 +1,8 @@
 CC=c99
 
-all: main
+main: main.c
+	$(CC) -Wall -Wextra -pedantic -g $< -o $@ -L../ -lenvcfg
 
-main: clean
-	$(CC) -g main.c -o main -L../ -lenvcfg
-
+.PHONY: clean
 clean:
 	$(RM) main

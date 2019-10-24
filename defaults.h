@@ -1,14 +1,16 @@
 #ifndef _ENVCFG_DEFAULT_H
 #define _ENVCFG_DEFAULT_H
 
-struct _default {
+typedef struct default_t {
 	char *key;
 	char *value;
 
-	struct _default *next;
-};
+	struct default_t *next;
+} DEFAULT;
 
-void _default_free(struct _default *defaults);
-struct _default *_default_get(struct _default *defaults, const char *key);
+int _default_append(DEFAULT *list, DEFAULT *item);
+DEFAULT *_default_create(const char *key, const char *val);
+void _default_free(DEFAULT *defaults);
+DEFAULT *_default_get(DEFAULT *defaults, const char *key);
 
 #endif /* _ENVCFG_DEFAULT_H */
