@@ -1,8 +1,6 @@
 #ifndef _ENVCFG_H
 #define _ENVCFG_H
 
-/* FIXME: what here needs to be `extern`? */
-
 #include "defaults.h"
 
 typedef struct envcfg_t {

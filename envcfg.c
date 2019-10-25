@@ -13,7 +13,6 @@ static void _ucase(char *s);
  * @param cfg envcfg state
  * @param key configuration lookup key, e.g., "listen_address".
  * @param val default value, e.g., "0.0.0.0:8000".
- *
  * @return On success 0 is returned, any non-zero value indicates an error.
  */
 int
@@ -52,11 +51,10 @@ envcfg_add_default(ENVCFG *cfg, const char *key, const char *val)
  * must be deallocated via `envcfg_free()`.
  *
  * @param program_name the program's name. This represents the prefix to all
- *	  environment variables, i.e., if the program is named "foo", all
- *	  environment configuration variables should be in the form FOO_<item>.
- *
+ *        environment variables, i.e., if the program is named "foo", all
+ *        environment configuration variables should be in the form FOO_<item>.
  * @return On success, a pointer to ENVCFG is returned. Any error encountered
- *	   will result in a return value of NULL.
+ *         will result in a return value of NULL.
  */
 ENVCFG *
 envcfg_new(const char *program_name) {
@@ -78,11 +76,10 @@ envcfg_new(const char *program_name) {
 
 /**
  * envcfg_free free()s all memory associated with the provided EVNCFG. This
- *	       must be called when a configuration is no longer needed or
- *	       memory will be leaked.
+ * must be called when a configuration is no longer needed or memory will
+ * be leaked.
  *
  * @param cfg The configuration to deallocate.
- *
  * @return On success 0 is returned, otherwise a non-zero value.
  */
 int

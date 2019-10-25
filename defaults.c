@@ -6,11 +6,10 @@
 #include "defaults.h"
 
 /**
- * _default_append appends the provided item to the provided list of defualts.
+ * _default_append appends the provided item to the provided list of defaults.
  *
  * @param list list of defaults, must be non-NULL.
  * @param item default to append to the list.
- *
  * @return On success 0 is returned, any non-zero value indicates failure.
  */
 int
@@ -28,12 +27,11 @@ _default_append(DEFAULT *list, DEFAULT *item)
 }
 
 /**
- * _default_create creates a new defaults configuratoin item. The returned item
+ * _default_create creates a new defaults configuration item. The returned item
  * (list) must be deallocated via _default_free().
  *
  * @param key configuration item lookup key, e.g., FOO_BAR.
  * @param val configuration item value, e.g., "BAZ".
- *
  * @return On success a new DEFAULT item is returned. Any error encountered
  * will result in a NULL return value.
  */
@@ -72,7 +70,6 @@ _default_create(const char *key, const char *val)
  * provided key, if found.
  *
  * @param defaults list of default configuration items.
- *
  * @return If a matching item is found, a pointer to it's location is returned.
  *	   If no match was found, NULL is returned.
  */
