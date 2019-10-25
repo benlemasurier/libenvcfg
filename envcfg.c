@@ -152,6 +152,38 @@ envcfg_get(ENVCFG *cfg, const char *key, char **dest)
 	return 0;
 }
 
+/**
+ * envcfg_get retrieves an integer value from the program's environment.
+ * If the key is not found within the environment a configured default will be
+ * used, if one exists.
+ *
+ * @param cfg envcfg state
+ * @param key configuration lookup key, if cfg.program_name is "foo", and the
+ * 	      config item is bar, the corresponding environment variable would
+ * 	      be "FOO_BAR".
+ * @param dest memory storage location for the requested configuration value.
+ * 	       On successful return, it is the responsibility of the caller to
+ * 	       free() this value.
+ * @return A return value of 0 indicates success, otherwise failure.
+ */
+int
+envcfg_get_int(ENVCFG *cfg, const char *key, int **dest)
+{
+	/* pull item from env in string form, if found */
+	char *tmp;
+	int res = envcfg_get(cfg, key, &tmp);
+	if(res != 0)
+		return res;
+
+	*dest = malloc(sizeof(int));
+	if(*dest == NULL)
+		return -1;
+
+	**dest = atoi(tmp);
+	free(tmp);
+	return 0;
+}
+
 static void
 _ucase(char *s)
 {
