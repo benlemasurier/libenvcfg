@@ -16,6 +16,8 @@
  * along with libenvcfg.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -64,21 +66,16 @@ _default_create(const char *key, const char *val)
 		return NULL;
 	item->next = NULL;
 
-	item->key = malloc(sizeof(char) * strlen(key) + 1);
-	if(item->key == NULL) {
+	if(!asprintf(&item->key, key)) {
 		free(item);
 		return NULL;
 	}
 
-	item->value = malloc(sizeof(char) * strlen(val) + 1);
-	if(item->value == NULL) {
+	if(!asprintf(&item->value, val)) {
 		free(item->key);
 		free(item);
 		return NULL;
 	}
-
-	strcpy(item->key, key);
-	strcpy(item->value, val);
 
 	return item;
 }

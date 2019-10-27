@@ -16,6 +16,8 @@
  * along with libenvcfg.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+#define _GNU_SOURCE
+
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,8 +46,8 @@ envcfg_add_default(ENVCFG *cfg, const char *key, const char *val)
 	DEFAULT *existing = _default_get(cfg->defaults, key);
 	if(existing) {
 		free(existing->value);
-		existing->value = malloc(sizeof(char) * strlen(val) + 1);
-		strcpy(existing->value, val);
+		if(!asprintf(&existing->value, val))
+			return -1;
 		return 0;
 	}
 
@@ -80,12 +82,10 @@ envcfg_new(const char *program_name) {
 	if(cfg == NULL)
 		return NULL;
 
-	cfg->program_name = malloc(strlen(program_name) + 1);
-	if(cfg->program_name == NULL) {
+	if(!asprintf(&cfg->program_name, program_name)) {
 		free(cfg);
 		return NULL;
 	}
-	strcpy(cfg->program_name, program_name);
 
 	cfg->defaults = NULL;
 
@@ -161,11 +161,8 @@ envcfg_get(ENVCFG *cfg, const char *key, char **dest)
 	}
 
 	/* copy result into destination buffer */
-	*dest = malloc(strlen(val)+1);
-	if(*dest == NULL)
+	if(!asprintf(dest, val))
 		return -1;
-
-	strcpy(*dest, val);
 
 	return 0;
 }
